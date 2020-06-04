@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("https://easy-expense-server.herokuapp.com")
+@CrossOrigin(origins="https://easy-expense-client.herokuapp.com")
 public class CategoryController {
 
     private CategoryRepository categoryRepository;

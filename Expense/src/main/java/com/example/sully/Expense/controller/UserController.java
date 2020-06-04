@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins="https://easy-expense-client.herokuapp.com")
 public class UserController {
 
     @Autowired
