@@ -18,13 +18,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("https://easy-expense-server.herokuapp.com")
 public class IncomeController {
 
     @Autowired
     private IncomeRepository incomeRepository;
-
-
-
 
     @GetMapping("/incomes/{user_id}")
     List<Income> getAllUserIncomes (@PathVariable UUID user_id) {
