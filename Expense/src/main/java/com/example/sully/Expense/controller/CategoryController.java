@@ -26,7 +26,6 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     Collection<Category> categories(){
         return categoryRepository.findAll();
         //This get method is basically saying select * from category
@@ -34,7 +33,6 @@ public class CategoryController {
     //what about category/2?
     //path variable
     @GetMapping("/category/{id}")
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> getCategory(@PathVariable Long id){
         //optional means it might not return anything
         //This line is going to return the category given the ID, we use optional because it may not return anything
@@ -48,7 +46,6 @@ public class CategoryController {
 
     @PostMapping("/category")
     //expecting valid request body
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException{
         Category result=categoryRepository.save(category);
         return ResponseEntity.created(new URI("/api/category/"+result.getId())).body(result);
@@ -57,7 +54,6 @@ public class CategoryController {
 
     //overwriting category
     @PutMapping("/category/{id}")
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category){
 
         Category result = categoryRepository.save(category);
@@ -65,7 +61,6 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> deleteCategory(@PathVariable Long id){
         categoryRepository.deleteById(id);
         return ResponseEntity.ok().build();

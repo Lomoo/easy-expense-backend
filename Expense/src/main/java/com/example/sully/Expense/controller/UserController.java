@@ -22,7 +22,6 @@ public class UserController {
     private  UserRepository userRepository;
 
     @PostMapping("/users")
-    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<User> createUser(@Valid @RequestBody User user) throws URISyntaxException {
 
          if(userRepository.findByUserUUID(user.getId()).size() == 0){
