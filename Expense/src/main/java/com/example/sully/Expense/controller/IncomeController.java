@@ -24,19 +24,16 @@ public class IncomeController {
     private IncomeRepository incomeRepository;
 
 
-    //return all incomes - not needed in the future
-    //@todo Delete this later
-    @GetMapping("/incomes")
-    List<Income> getIncomes(){
-        return incomeRepository.findAll();
-    }
+
 
     @GetMapping("/incomes/{user_id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     List<Income> getAllUserIncomes (@PathVariable UUID user_id) {
         return incomeRepository.findByUserUUID(user_id);
     }
 
     @GetMapping("/incomes/{id}/{user_id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> getUserIncome (@PathVariable Long id, @PathVariable UUID user_id) {
         Optional<Income> income = incomeRepository.findById(id);
 
@@ -49,6 +46,7 @@ public class IncomeController {
     }
 
     @DeleteMapping("/incomes/{id}/{user_id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> deleteIncome(@PathVariable Long id, @PathVariable UUID user_id){
 
         if(incomeRepository.findById(id).get().checkUserId(user_id)){
@@ -59,6 +57,7 @@ public class IncomeController {
 
     }
     @PutMapping("/incomes/update/{id}/{user_id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Income> updateIncome (@Valid @RequestBody Income income, @PathVariable Long id, @PathVariable UUID user_id){
         if(!incomeRepository.findById(id).get().checkUserId(user_id)){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -67,6 +66,7 @@ public class IncomeController {
         return ResponseEntity.ok().body(result);
     }
     @PostMapping("/incomes")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Income> createIncome(@Valid @RequestBody Income income) throws URISyntaxException{
         Income result = incomeRepository.save(income);
         return ResponseEntity.created(new URI("/api/incomes" + result.getId())).body(result);

@@ -26,6 +26,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     Collection<Category> categories(){
         return categoryRepository.findAll();
         //This get method is basically saying select * from category
@@ -33,6 +34,7 @@ public class CategoryController {
     //what about category/2?
     //path variable
     @GetMapping("/category/{id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> getCategory(@PathVariable Long id){
         //optional means it might not return anything
         //This line is going to return the category given the ID, we use optional because it may not return anything
@@ -46,6 +48,7 @@ public class CategoryController {
 
     @PostMapping("/category")
     //expecting valid request body
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException{
         Category result=categoryRepository.save(category);
         return ResponseEntity.created(new URI("/api/category/"+result.getId())).body(result);
@@ -54,6 +57,7 @@ public class CategoryController {
 
     //overwriting category
     @PutMapping("/category/{id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category){
 
         Category result = categoryRepository.save(category);
@@ -61,6 +65,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
+    @CrossOrigin(origins = "https://easy-expense-client.herokuapp.com/")
     ResponseEntity<?> deleteCategory(@PathVariable Long id){
         categoryRepository.deleteById(id);
         return ResponseEntity.ok().build();
@@ -68,61 +73,3 @@ public class CategoryController {
 
 }
 
-// Use this code snippet in your app.
-// If you need more information about configurations or implementing the sample code, visit the AWS docs:
-// https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-samples.html#prerequisites
-
-//    public static void getSecret() {
-//
-//        String secretName = "expense-tracker-db";
-//        String region = "us-east-2";
-//
-//        // Create a Secrets Manager client
-//        AWSSecretsManager client  = AWSSecretsManagerClientBuilder.standard()
-//                .withRegion(region)
-//                .build();
-//
-//        // In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
-//        // See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-//        // We rethrow the exception by default.
-//
-//        String secret, decodedBinarySecret;
-//        GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
-//                .withSecretId(secretName);
-//        GetSecretValueResult getSecretValueResult = null;
-//
-//        try {
-//            getSecretValueResult = client.getSecretValue(getSecretValueRequest);
-//        } catch (DecryptionFailureException e) {
-//            // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
-//            // Deal with the exception here, and/or rethrow at your discretion.
-//            throw e;
-//        } catch (InternalServiceErrorException e) {
-//            // An error occurred on the server side.
-//            // Deal with the exception here, and/or rethrow at your discretion.
-//            throw e;
-//        } catch (InvalidParameterException e) {
-//            // You provided an invalid value for a parameter.
-//            // Deal with the exception here, and/or rethrow at your discretion.
-//            throw e;
-//        } catch (InvalidRequestException e) {
-//            // You provided a parameter value that is not valid for the current state of the resource.
-//            // Deal with the exception here, and/or rethrow at your discretion.
-//            throw e;
-//        } catch (ResourceNotFoundException e) {
-//            // We can't find the resource that you asked for.
-//            // Deal with the exception here, and/or rethrow at your discretion.
-//            throw e;
-//        }
-//
-//        // Decrypts secret using the associated KMS CMK.
-//        // Depending on whether the secret is a string or binary, one of these fields will be populated.
-//        if (getSecretValueResult.getSecretString() != null) {
-//            secret = getSecretValueResult.getSecretString();
-//        }
-//        else {
-//            decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
-//        }
-//
-//        // Your code goes here.
-//    }
